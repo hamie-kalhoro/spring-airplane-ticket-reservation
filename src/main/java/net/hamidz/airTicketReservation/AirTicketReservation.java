@@ -17,4 +17,5 @@ public class AirTicketReservation {
 	public String check() {
 		return "100%, OK!";
 	}
+	
 }
