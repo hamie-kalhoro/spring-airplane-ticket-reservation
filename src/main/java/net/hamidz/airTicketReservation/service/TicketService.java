@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TicketService {
@@ -24,5 +26,14 @@ public class TicketService {
             e.printStackTrace();
             System.out.println("error occured during ticket creation !!!");
         }
+    }
+
+    public List<Ticket> findAllTickets() {
+        return ticketRepository.findAll();
+    }
+
+    public Ticket getById(Long id) {
+        Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("ticket not found!"));
+        return ticket;
     }
 }
