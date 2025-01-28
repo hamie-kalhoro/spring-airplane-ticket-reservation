@@ -41,4 +41,17 @@ public class TicketController {
         return new ResponseEntity<>("ticket deleted!", HttpStatus.OK);
     }
 
+    @PutMapping("/ticket/{id}")
+    public ResponseEntity<?> updateTicket(@PathVariable Long id, @RequestBody Ticket newTicket) {
+        Ticket ticket = ticketService.getById(id);
+        if(ticket != null && !ticket.equals("")) {
+            ticket.setTicketType(ticket.getTicketType() != null && ticket.getTicketType() != "" ?
+                    newTicket.getTicketType() : ticket.getTicketType());
+            ticket.setTicketNumber(ticket.getTicketNumber() != null && ticket.getTicketNumber() != "" ?
+                    newTicket.getTicketNumber() : ticket.getTicketNumber());
+            ticketService.createTicket(ticket);
+        }
+        return new ResponseEntity<>("ticket updated!", HttpStatus.OK);
+    }
+
 }
