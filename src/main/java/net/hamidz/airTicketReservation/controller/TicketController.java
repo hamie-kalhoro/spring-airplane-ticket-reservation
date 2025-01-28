@@ -35,4 +35,10 @@ public class TicketController {
         return new ResponseEntity<>(ticketService.getById(id), HttpStatus.FOUND);
     }
 
+    @DeleteMapping("/ticket/{id}")
+    public ResponseEntity<?> deleteTicket(@PathVariable Long id) {
+        ticketService.deleteTicketById(id);
+        return new ResponseEntity<>("ticket deleted!", HttpStatus.OK);
+    }
+
 }

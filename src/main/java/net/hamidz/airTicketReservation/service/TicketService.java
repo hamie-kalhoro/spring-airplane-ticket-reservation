@@ -36,4 +36,13 @@ public class TicketService {
         Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("ticket not found!"));
         return ticket;
     }
+
+    public void deleteTicketById(Long id) {
+        Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("ticket not found!"));
+        if(ticket != null && !ticket.equals("")) {
+            ticketRepository.delete(ticket);
+        } else {
+            throw new RuntimeException("invalid ticket found!");
+        }
+    }
 }
