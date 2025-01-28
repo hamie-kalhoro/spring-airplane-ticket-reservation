@@ -25,9 +25,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found!!!"));
-        return Optional.of(user);
+    public User findUserById(Long id) {
+        User user = userRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("User not found!!!"));
+        return user;
     }
 
     public void deleteUserById(Long id) {

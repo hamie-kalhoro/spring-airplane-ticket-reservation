@@ -29,13 +29,27 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<Optional<User>> getUserById(@PathVariable Long id) {
-        return new ResponseEntity<>(userService.findUserById(id), HttpStatus.FOUND);
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User userById = userService.findUserById(id);
+        return new ResponseEntity<>(userById, HttpStatus.FOUND);
     }
 
     @DeleteMapping("/user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/update-user/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User newUser) {
+        User user = userService.findUserById(id);
+        if(user != null && !user.equals("")) {
+            user.setUsername(user.getUsername() != null && !user.getUsername().isEmpty()
+                    ? newUser.getUsername() : user.getUsername());
+            user.setPassword(user.getPassword() != null && !user.getPassword().isEmpty()
+                    ? newUser.getPassword() : user.getPassword());
+            userService.createUser(user);
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
